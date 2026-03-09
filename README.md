@@ -26,7 +26,13 @@ In Claude Code, run:
 
 ### Step 3: Configure credentials
 
-After installing the BitoAIArchitect plugin, set your environment variables:
+Run the interactive setup command in Claude Code:
+
+```
+/bito-ai-architect:bito-setup
+```
+
+This will guide you through configuring your workspace ID, bearer token, and email. Alternatively, you can set the environment variables manually:
 
 ```bash
 export BITO_WORKSPACE_ID="your-workspace-id"
@@ -35,6 +41,19 @@ export BITO_EMAIL="your-email@company.com"
 ```
 
 Restart Claude Code, then run `/mcp` to verify the server is connected.
+
+## Available Commands
+
+Once installed, the following slash commands are available in Claude Code:
+
+| Command | Description |
+|---------|-------------|
+| `/bito-ai-architect:bito-setup` | Interactive setup to configure credentials |
+| `/bito-ai-architect:codebase-explorer` | Deep codebase exploration across repositories |
+| `/bito-ai-architect:feature-plan` | Build a detailed implementation plan for a complex feature |
+| `/bito-ai-architect:prd` | Write a Product Requirements Document grounded in real system context |
+| `/bito-ai-architect:trd` | Produce a Technical Requirements Document by analyzing existing architecture |
+| `/bito-ai-architect:production-triage` | Diagnose production incidents with cross-repo context and blast radius mapping |
 
 ## For Plugin Developers
 
