@@ -1,0 +1,21 @@
+{
+  "_comment": "BitoAIArchitect plugin settings",
+  "requiredEnvVars": {
+    "BITO_WORKSPACE_ID": {
+      "description": "Your Bito workspace identifier",
+      "help": "Found at https://app.bito.ai under workspace settings"
+    },
+    "BITO_MCP_TOKEN": {
+      "description": "MCP authentication bearer token",
+      "help": "Found in Bito workspace under API/MCP settings"
+    },
+    "BITO_EMAIL": {
+      "description": "Email address associated with your Bito account",
+      "help": "The email you use to log in to Bito"
+    }
+  },
+  "defaults": {
+    "mcpEndpoint": "https://mcp.bito.ai",
+    "transport": "http"
+  }
+}

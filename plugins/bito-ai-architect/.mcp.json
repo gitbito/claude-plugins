@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "BitoAIArchitect": {
+      "type": "http",
+      "url": "https://mcp.bito.ai/${BITO_WORKSPACE_ID}/mcp",
+      "headers": {
+        "Authorization": "Bearer ${BITO_MCP_TOKEN}",
+        "x-email-id": "${BITO_EMAIL}"
+      }
+    }
+  }
+}

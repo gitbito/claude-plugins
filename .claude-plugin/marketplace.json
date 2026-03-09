@@ -1,0 +1,14 @@
+{
+  "name": "bito-claude-plugins",
+  "owner": {
+    "name": "Bito, Inc.",
+    "url": "https://bito.ai"
+  },
+  "plugins": [
+    {
+      "name": "bito-ai-architect",
+      "source": "./plugins/bito-ai-architect",
+      "description": "BitoAIArchitect MCP server for cross-repo intelligence — search code, explore dependencies, analyze architecture, and discover patterns across all your organization's repositories."
+    }
+  ]
+}
