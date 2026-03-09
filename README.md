@@ -55,6 +55,6 @@ Once installed, the following slash commands are available in Claude Code:
 | `/bito-ai-architect:trd` | Produce a Technical Requirements Document by analyzing existing architecture |
 | `/bito-ai-architect:production-triage` | Diagnose production incidents with cross-repo context and blast radius mapping |
 
-## For Plugin Developers
+## Feature Requests
 
-To add a new plugin to this marketplace, submit a PR adding your plugin entry to `.claude-plugin/marketplace.json`.
+To request new features or skills, send an email to support@bito.ai.
