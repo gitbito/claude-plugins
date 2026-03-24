@@ -54,6 +54,10 @@ Once installed, the following slash commands are available in Claude Code:
 | `/bito-ai-architect:prd` | Write a Product Requirements Document grounded in real system context |
 | `/bito-ai-architect:trd` | Produce a Technical Requirements Document by analyzing existing architecture |
 | `/bito-ai-architect:production-triage` | Diagnose production incidents with cross-repo context and blast radius mapping |
+| `/bito-ai-architect:epic-to-plan` | Convert an approved epic or PRD into a complete, sprint-ready implementation plan |
+| `/bito-ai-architect:feasibility` | Produce a go/no-go feasibility and impact analysis before committing to implementation |
+| `/bito-ai-architect:scope-to-plan` | Convert any approved work item into a complete, sprint-ready implementation plan |
+| `/bito-ai-architect:spike` | Conduct a structured technical investigation when the team doesn't know enough to plan |
 
 ## Feature Requests
 
