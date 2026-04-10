@@ -44,6 +44,8 @@ Restart Claude Code to pick up the new environment variables and activate the pl
 | Guidelines | `CLAUDE.md` | Auto-loaded instructions teaching Claude when/how to use BitoAIArchitect tools |
 | Setup skill | `skills/setup-bito/SKILL.md` | Interactive credential setup guide |
 | Setup command | `commands/bito-setup.md` | `/bito-setup` slash command |
+| Commit review skill | `skills/commit-review/SKILL.md` | Pre-commit review with cross-repo impact analysis |
+| Commit review command | `commands/commit-review.md` | `/commit-review` slash command |
 | MCP config | `.mcp.json` | Standalone MCP config (can be copied to other projects) |
 | Hooks | `hooks/hooks.json` | Placeholder for future event hooks |
 | Settings | `settings.json` | Documents required env vars and defaults |
