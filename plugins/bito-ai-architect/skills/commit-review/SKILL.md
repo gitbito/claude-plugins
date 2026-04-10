@@ -38,7 +38,7 @@ This skill performs a comprehensive pre-commit review that:
 !`git branch --show-current`!
 
 ### BitoReview CLI Available
-!`command -v bitoreview >/dev/null 2>&1 && echo "YES" || echo "NO"`!
+!`which bitoreview`!
 
 ---
 
@@ -77,48 +77,26 @@ Read and internalize context from these files (if they exist):
 
 ### 0.1 Project Documentation Files
 
-Search for and read these files in order of priority:
+Search for and read these files in order of priority (if they exist):
 
-- [ ] **`CLAUDE.md`** (project root and parent directories)
-  - Contains project-specific instructions, coding standards, architectural decisions
-  - May have rules about what patterns to follow or avoid
+- [ ] **`CLAUDE.md`** (project root and parent directories) — project-specific instructions, coding standards, architectural decisions
+- [ ] **`AGENTS.md`** — agent-specific instructions, review criteria, approval gates
+- [ ] **`.cursorrules`** or **`cursor.rules`** — IDE coding standards, naming conventions
+- [ ] **`.github/CODEOWNERS`** — code ownership, helps identify who to notify for cross-repo impact
+- [ ] **`.editorconfig`** — formatting rules (indentation, line endings, charset)
+- [ ] **`CONTRIBUTING.md`** — contribution guidelines, PR requirements, commit message format
+- [ ] **`README.md`** — project overview and architecture context
+- [ ] **`.pre-commit-config.yaml`** — existing pre-commit hooks and checks
 
-- [ ] **`AGENTS.md`**
-  - Agent-specific instructions and workflows
-  - May define review criteria or approval gates
+### 0.2 Language-Specific Config Detection
 
-- [ ] **`.cursorrules`** or **`cursor.rules`**
-  - Cursor IDE rules that define coding standards
-  - Often contains linting rules, naming conventions
+Detect programming languages from the file extensions in the staged diff (e.g., `.go` → Go, `.rs` → Rust, `.py` → Python). Then, based on your knowledge of those languages:
 
-- [ ] **`.github/CODEOWNERS`**
-  - Who owns which parts of the codebase
-  - Helps identify who to notify for cross-repo impact
+1. **Identify the linter, formatter, and static analysis tools** commonly used for the detected language(s)
+2. **Search the project root for their config files** (e.g., `.golangci.yml` for Go, `.rubocop.yml` for Ruby, `ruff.toml` for Python — use your knowledge, do not rely on a hardcoded list)
+3. **Read any configs found** and apply their rules during the review
 
-- [ ] **`.editorconfig`**
-  - Editor configuration for consistent formatting
-  - Indentation, line endings, charset rules
-
-- [ ] **`CONTRIBUTING.md`**
-  - Contribution guidelines
-  - PR requirements, commit message format
-
-- [ ] **`README.md`**
-  - Project overview and architecture
-  - May contain important context about the system
-
-- [ ] **`.eslintrc*`, `.prettierrc*`, `biome.json`, etc.**
-  - Linting and formatting rules
-  - Code style requirements
-
-### 0.2 IDE/Tool Configuration
-
-Also check for:
-
-- [ ] **`.vscode/settings.json`** - VS Code workspace settings
-- [ ] **`.idea/`** - IntelliJ/WebStorm settings
-- [ ] **`pyrightconfig.json`**, **`tsconfig.json`** - Type checking rules
-- [ ] **`.pre-commit-config.yaml`** - Existing pre-commit hooks
+This approach is language-agnostic — it works for any language you recognize, without needing a predefined mapping.
 
 ### 0.3 Build Context Summary
 
@@ -490,7 +468,8 @@ Ask user: "Ready to commit with the above message? (yes/edit/cancel)"
 | `CONTRIBUTING.md` | PR requirements, commit format |
 | `CODEOWNERS` | Who owns which code paths |
 | `.editorconfig` | Formatting rules |
-| `tsconfig.json` / `pyrightconfig.json` | Type checking strictness |
+| `.pre-commit-config.yaml` | Pre-commit hooks and checks |
+| Language-specific configs | Detected from file extensions in the diff (see Phase 0.2) |
 
 ---
 
