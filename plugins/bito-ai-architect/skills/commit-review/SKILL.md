@@ -124,13 +124,11 @@ After reading available files, create a mental model:
 
 ### 1.0 Check for BitoReview CLI
 
-First, determine if `bitoreview` CLI is available:
+Check the **BitoReview CLI Available** output captured above (in the "Staged Changes to Review" section). If a file path was returned (e.g., `/usr/local/bin/bitoreview`), bitoreview IS installed — you MUST use it for Phase 1.1. If the output was empty or showed an error, bitoreview is NOT installed — proceed to Phase 1.2.
 
-```bash
-command -v bitoreview >/dev/null 2>&1 && echo "AVAILABLE" || echo "NOT_AVAILABLE"
-```
+**Do NOT skip bitoreview when it is available.** It provides more comprehensive analysis than manual review.
 
-### 1.1 If BitoReview is AVAILABLE (Preferred)
+### 1.1 If BitoReview is AVAILABLE (MANDATORY when installed)
 
 Use `bitoreview` for comprehensive code review:
 
