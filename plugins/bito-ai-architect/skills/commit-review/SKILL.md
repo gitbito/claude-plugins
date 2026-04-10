@@ -38,7 +38,7 @@ This skill performs a comprehensive pre-commit review that:
 !`git branch --show-current`!
 
 ### BitoReview CLI Available
-!`command -v bitoreview >/dev/null 2>&1 && echo "YES" || echo "NO"`!
+!`which bitoreview`!
 
 ---
 
