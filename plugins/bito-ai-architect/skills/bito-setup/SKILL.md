@@ -1,5 +1,5 @@
 ---
-name: setup-bito
+name: bito-setup
 description: Guide the user through configuring BitoAIArchitect MCP credentials
 ---
 

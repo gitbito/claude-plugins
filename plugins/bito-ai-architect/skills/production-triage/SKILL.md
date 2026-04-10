@@ -3,8 +3,6 @@ name: production-triage
 description: Diagnose production incidents by gathering cross-repo context, mapping blast radius, and building a structured remediation plan using AI Architect
 ---
 
-> ⚠️ **Requires:** BitoAIArchitect MCP server configured and running. Run `/setup-bito` first if not configured.
-
 # Production Issue Triage with AI Architect
 
 ## Purpose

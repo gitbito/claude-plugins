@@ -3,8 +3,6 @@ name: prd
 description: Write a comprehensive Product Requirements Document grounded in real system context from AI Architect
 ---
 
-> ⚠️ **Requires:** BitoAIArchitect MCP server configured and running. Run `/setup-bito` first if not configured.
-
 # Product Requirements Document (PRD) with AI Architect
 
 ## Purpose

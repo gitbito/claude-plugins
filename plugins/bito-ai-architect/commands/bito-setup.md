@@ -1,6 +1,6 @@
 # Bito AI Architect Setup
 
-Run the setup-bito skill to configure the BitoAIArchitect MCP server.
+Run the bito-setup skill to configure the BitoAIArchitect MCP server.
 
 Walk me through setting up my BitoAIArchitect MCP connection. I need help with:
 
