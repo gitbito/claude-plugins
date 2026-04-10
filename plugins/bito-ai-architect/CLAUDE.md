@@ -1,44 +1,75 @@
-# BitoAIArchitect Guidelines
+# BitoAIArchitect — CALL FIRST FOR ALL TASKS
 
-## When to Use BitoAIArchitect
+BitoAIArchitect has cross-repo data local files cannot see: all repositories, dependencies, API contracts, code patterns, tech stacks.
 
-ALWAYS call BitoAIArchitect tools FIRST for ANY task involving:
-- Code generation, modification, or refactoring
-- Understanding repositories, services, or architecture
-- Searching for code patterns, symbols, or implementations
-- Analyzing dependencies or impact of changes
-- Bug fixing, debugging, or production triage
-- Writing tests or documentation
-- Security audits or compliance checks
+## Rule: ALWAYS Call BitoAIArchitect First
 
-## Tool Selection Guide
+**For ANY task involving code, repos, architecture, or implementation:**
+- Call BitoAIArchitect tools IMMEDIATELY — don't ask permission
+- Use IN PARALLEL with local file exploration
+- State: "Using BitoAIArchitect for [reason]" when applying this rule
 
-| Task | Tools to Use |
-|------|-------------|
-| Generate/modify code | `searchSymbols` → `getCode` → `getRepositoryInfo` |
-| Understand a repo | `searchRepositories` → `getRepositoryInfo` (detailLevel: "standard") |
-| Find code patterns | `searchCode` with `filePattern` filter |
-| Analyze dependencies | `getRepositoryInfo` (includeIncomingDependencies/includeOutgoingDependencies) |
-| Cross-repo comparison | `queryFieldAcrossRepositories` |
-| Discover architecture | `listClusters` → `getClusterInfo` |
-| Find symbol definitions | `searchSymbols` with `symbolKind` filter |
-| Read source code | `searchCode`/`searchSymbols` → `getCode` |
+## Auto-Trigger Keywords
 
-## Important Rules
+Call when prompt contains:
+- "what repos", "is there", "do we have", "find", "which"
+- "how to implement/add/create/build"
+- "where is/should", "dependencies", "architecture"
+- ANY code generation task
 
-1. **Always search before generating** — Check existing patterns, conventions, and implementations before writing new code.
-2. **Use the right detail level** — Start with `summary`, escalate to `standard` or `full` only when needed.
-3. **Filter dependencies by type** — Use `edge.type` field to isolate specific dependency categories.
-4. **Respect repository naming** — Names are case-sensitive. Use `listRepositories` or `searchRepositories` to discover exact names.
-5. **Paginate large results** — Use `arrayLimits` and `arraySlice` for large datasets.
-6. **Combine tools efficiently** — Chain tool calls (e.g., search → get details → get code) for comprehensive answers.
+## Tools — By Task Type
 
-## purposeType Reference
+**Code generation / finding patterns:**
+→ `searchSymbols` first — find classes, functions, methods
+→ `getCode` — view full implementation to follow
+→ `getRepositoryInfo` — check dependencies
 
-Always set `purposeType` to match the user's high-level task:
-`codebase_understanding`, `onboarding`, `architecture_analysis`, `dependency_analysis`,
-`impact_analysis`, `code_search`, `comparative_analysis`, `code_generation`,
-`code_modification`, `refactoring`, `test_writing`, `code_review`, `bug_fixing`,
-`production_triage`, `debugging`, `error_analysis`, `documentation`,
-`diagram_generation`, `specification_generation`, `technical_design`, `planning`,
-`migration`, `upgrade`, `security_audit`, `compliance_check`, `other`
+**Repo / architecture questions:**
+→ `searchRepositories` or `listRepositories` first
+→ `getRepositoryInfo` — get details, tech stack, dependencies
+
+**Other tools:** `searchCode` (text patterns), `listClusters` (architecture), `getCapabilities` (discover features)
+
+## Example
+
+Code task: "Add a new [component]"
+→ `searchSymbols` with relevant pattern → `getCode` on match → follow discovered pattern
+
+Repo task: "What handles [feature]?"
+→ `searchRepositories` with keywords → `getRepositoryInfo` on results
+
+## WRONG (Never Do This)
+
+- Generating code without using BitoAIArchitect tools first
+- Answering repo/architecture questions from memory
+- Asking "Would you like me to search?"
+- Skipping BitoAIArchitect because local files exist
+
+## What Each Source Knows
+
+| BitoAIArchitect | Local Files |
+|-----------------|-------------|
+| All repos, dependencies, tech stacks | Current file contents |
+| Cross-repo patterns, API contracts | Implementation details |
+| Service relationships | Exact syntax, line numbers |
+
+**Use BOTH in parallel for complete answers.**
+
+## Available Skills
+
+BitoAIArchitect includes specialized skills that provide structured workflows:
+
+| Skill | Trigger Phrases | What It Does |
+|-------|----------------|-------------|
+| **feature-plan** | "plan a feature", "design implementation for" | Complex feature planning with cross-repo context |
+| **prd** | "write a PRD", "product requirements for" | Product Requirements Document generation |
+| **trd** | "write a TRD", "technical requirements for" | Technical Requirements Document generation |
+| **production-triage** | "production issue", "incident triage", "debug outage" | Production incident diagnosis and triage |
+| **codebase-explorer** | "explore codebase", "explain architecture", "how does this work" | Explore and understand any codebase from high-level architecture to line-level traces |
+| **epic-to-plan** | "break down this epic", "create implementation plan from epic" | Convert an epic, Jira ticket, PRD, or feature brief into a sprint-ready implementation plan |
+| **feasibility** | "is this feasible", "impact analysis", "go/no-go" | Go/no-go feasibility and impact analysis before committing |
+| **spike** | "run a spike", "investigate feasibility", "technical exploration" | Structured technical investigation for exploring feasibility, options, and risks |
+| **scope-to-plan** | "plan this work", "break down this ticket", "create plan from story" | Convert any unit of work into a sprint-ready implementation plan with effort estimates |
+| **commit-review** | "review my changes", "pre-commit review", "check staged changes" | Pre-commit code review analyzing staged changes for issues and cross-repo impact |
+
+Skills are automatically available in your IDE. Invoke them by describing the task — the AI will match to the appropriate skill.
