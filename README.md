@@ -58,6 +58,7 @@ Once installed, the following slash commands are available in Claude Code:
 | `/bito-ai-architect:feasibility` | Produce a go/no-go feasibility and impact analysis before committing to implementation |
 | `/bito-ai-architect:scope-to-plan` | Convert any approved work item into a complete, sprint-ready implementation plan |
 | `/bito-ai-architect:spike` | Conduct a structured technical investigation when the team doesn't know enough to plan |
+| `/bito-ai-architect:commit-review` | Pre-commit code review analyzing staged changes for issues and cross-repo impact |
 
 ## Feature Requests
 

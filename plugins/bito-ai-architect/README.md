@@ -6,12 +6,9 @@ A Claude Code plugin that installs the **BitoAIArchitect MCP server** — giving
 
 ### 1. Install the Plugin
 
-```bash
-# From GitHub (once published)
-/plugin install <repo-url>
-
-# Or copy manually
-cp -r bito-ai-architect-plugin ~/.claude/plugins/bito-ai-architect
+```
+/plugin marketplace add gitbito/claude-plugins
+/plugin install bito-ai-architect@bito-claude-plugins
 ```
 
 ### 2. Set Environment Variables
@@ -44,8 +41,16 @@ Restart Claude Code to pick up the new environment variables and activate the pl
 | Guidelines | `CLAUDE.md` | Auto-loaded instructions teaching Claude when/how to use BitoAIArchitect tools |
 | Setup skill | `skills/bito-setup/SKILL.md` | Interactive credential setup guide |
 | Setup command | `commands/bito-setup.md` | `/bito-setup` slash command |
-| Commit review skill | `skills/commit-review/SKILL.md` | Pre-commit review with cross-repo impact analysis |
-| Commit review command | `commands/commit-review.md` | `/commit-review` slash command |
+| Commit review | `skills/commit-review/SKILL.md` | Pre-commit review with cross-repo impact analysis |
+| Feature plan | `skills/feature-plan/SKILL.md` | Complex feature planning with cross-repo context |
+| PRD | `skills/prd/SKILL.md` | Product Requirements Document generation |
+| TRD | `skills/trd/SKILL.md` | Technical Requirements Document generation |
+| Production triage | `skills/production-triage/SKILL.md` | Production incident diagnosis and triage |
+| Codebase explorer | `skills/codebase-explorer/SKILL.md` | Explore and understand codebase architecture |
+| Epic to plan | `skills/epic-to-plan/SKILL.md` | Convert epics or PRDs into sprint-ready plans |
+| Feasibility | `skills/feasibility/SKILL.md` | Go/no-go feasibility and impact analysis |
+| Spike | `skills/spike/SKILL.md` | Structured technical investigation |
+| Scope to plan | `skills/scope-to-plan/SKILL.md` | Convert any work item into a sprint-ready plan |
 | MCP config | `.mcp.json` | Standalone MCP config (can be copied to other projects) |
 | Hooks | `hooks/hooks.json` | Placeholder for future event hooks |
 | Settings | `settings.json` | Documents required env vars and defaults |
