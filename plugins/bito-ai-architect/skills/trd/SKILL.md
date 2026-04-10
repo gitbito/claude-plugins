@@ -3,8 +3,6 @@ name: trd
 description: Produce a detailed Technical Requirements Document by deeply analyzing existing architecture, dependencies, and patterns using AI Architect
 ---
 
-> ⚠️ **Requires:** BitoAIArchitect MCP server configured and running. Run `/setup-bito` first if not configured.
-
 # Technical Requirements Document (TRD) with AI Architect
 
 ## Purpose

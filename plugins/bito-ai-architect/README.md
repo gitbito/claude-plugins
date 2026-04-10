@@ -42,7 +42,7 @@ Restart Claude Code to pick up the new environment variables and activate the pl
 |-----------|------|-------------|
 | Plugin manifest | `.claude-plugin/plugin.json` | Plugin metadata + MCP server config |
 | Guidelines | `CLAUDE.md` | Auto-loaded instructions teaching Claude when/how to use BitoAIArchitect tools |
-| Setup skill | `skills/setup-bito/SKILL.md` | Interactive credential setup guide |
+| Setup skill | `skills/bito-setup/SKILL.md` | Interactive credential setup guide |
 | Setup command | `commands/bito-setup.md` | `/bito-setup` slash command |
 | Commit review skill | `skills/commit-review/SKILL.md` | Pre-commit review with cross-repo impact analysis |
 | Commit review command | `commands/commit-review.md` | `/commit-review` slash command |

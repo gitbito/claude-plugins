@@ -1,7 +1,7 @@
 {
   "name": "bito-ai-architect",
   "description": "Installs the BitoAIArchitect MCP server for cross-repo intelligence — search code, explore dependencies, analyze architecture, and discover patterns across all your organization's repositories.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": {
     "name": "Bito, Inc.",
     "url": "https://bito.ai"

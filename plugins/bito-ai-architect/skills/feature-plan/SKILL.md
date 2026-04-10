@@ -3,8 +3,6 @@ name: feature-plan
 description: Build a detailed, organization-specific implementation plan for a complex feature by gathering cross-repo context from AI Architect
 ---
 
-> ⚠️ **Requires:** BitoAIArchitect MCP server configured and running. Run `/setup-bito` first if not configured.
-
 # Complex Feature Plan with AI Architect
 
 
