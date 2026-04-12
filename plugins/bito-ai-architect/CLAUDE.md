@@ -70,6 +70,6 @@ BitoAIArchitect includes specialized skills that provide structured workflows:
 | **feasibility** | "is this feasible", "impact analysis", "go/no-go" | Go/no-go feasibility and impact analysis before committing |
 | **spike** | "run a spike", "investigate feasibility", "technical exploration" | Structured technical investigation for exploring feasibility, options, and risks |
 | **scope-to-plan** | "plan this work", "break down this ticket", "create plan from story" | Convert any unit of work into a sprint-ready implementation plan with effort estimates |
-| **commit-review** | "review my changes", "pre-commit review", "check staged changes" | Pre-commit code review analyzing staged changes for issues and cross-repo impact |
+| **commit-review** | "review my changes", "pre-commit review", "check my changes" | Pre-commit code review analyzing all changes (staged and unstaged) for issues and cross-repo impact |
 
 Skills are automatically available in your IDE. Invoke them by describing the task — the AI will match to the appropriate skill.

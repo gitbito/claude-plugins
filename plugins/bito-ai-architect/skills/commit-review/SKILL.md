@@ -1,20 +1,35 @@
 ---
 name: commit-review
-description: Pre-commit code review that analyzes staged changes for issues and cross-repo impact using BitoAIArchitect. Blocks commit until issues are resolved. Invoke with /commit-review before committing.
+description: Pre-commit code review that analyzes all changes (staged and unstaged) for issues and cross-repo impact using BitoAIArchitect. Blocks commit until issues are resolved. Invoke with /commit-review before committing.
 user-invocable: true
 disable-model-invocation: false
-argument-hint: "[--skip-cross-repo] [--severity critical|all]"
+argument-hint: "[--severity critical|all] [--focus security|performance]"
 ---
 
 > **Requires:** BitoAIArchitect MCP server configured and running for cross-repo impact analysis.
 
 # Pre-Commit Review with Cross-Repo Impact Analysis
 
+## Default Behavior
+
+**When invoked without arguments:** Review ALL local changes (staged and unstaged) in the current repository. Three things ALWAYS happen:
+1. **bitoreview CLI** — if available (check in Phase 1.0), you MUST run it first
+2. **Manual review** — ALWAYS runs, regardless of whether bitoreview was used
+3. **Cross-repo impact analysis** — ALWAYS runs using BitoAIArchitect, regardless of change size
+
+**Arguments passed:** $ARGUMENTS
+
+If arguments were provided, apply them:
+- `--severity critical` → only report BLOCKING issues, skip suggestions
+- `--severity all` → report all severity levels (default)
+- `--focus security` → pass `--focus security` to bitoreview and prioritize security in manual review
+- `--focus performance` → pass `--focus performance` to bitoreview and prioritize performance in manual review
+
 ## Purpose
 
 This skill performs a comprehensive pre-commit review that:
 1. **Gathers project context** from documentation files (CLAUDE.md, AGENTS.md, etc.)
-2. **Reviews staged changes** using `bitoreview` CLI (if available) or manual analysis
+2. **Reviews all local changes** using `bitoreview` CLI (if available) AND manual analysis
 3. **Analyzes cross-repo impact** using BitoAIArchitect to identify potential breaking changes
 4. **Blocks commit** if critical issues are found, requiring resolution before proceeding
 5. **Only allows commit** after all blocking issues are addressed
@@ -23,13 +38,16 @@ This skill performs a comprehensive pre-commit review that:
 
 ---
 
-## Staged Changes to Review
+## Changes to Review
 
 ### Git Status
 !`git status --short`!
 
 ### Staged Diff
 !`git diff --staged --stat`!
+
+### Unstaged Diff
+!`git diff --stat`!
 
 ### Recent Commits for Context
 !`git log --oneline -5`!
@@ -38,7 +56,7 @@ This skill performs a comprehensive pre-commit review that:
 !`git branch --show-current`!
 
 ### BitoReview CLI Available
-!`which bitoreview`!
+Run `which bitoreview` during Phase 1.0 to check availability.
 
 ---
 
@@ -48,7 +66,7 @@ This skill performs a comprehensive pre-commit review that:
 flowchart TB
 start["START\nInvoke /commit-review"]
 phase0["Phase 0\nGather Project Context"]
-phase1["Phase 1\nCode Quality Review\n(bitoreview or manual)"]
+phase1["Phase 1\nCode Quality Review\n(bitoreview AND manual)"]
 phase2["Phase 2\nCross-Repo Impact Analysis\n(BitoAIArchitect)"]
 checkpoint1["CHECKPOINT 1\nPresent All Issues"]
 decision{"Blocking\nIssues?"}
@@ -90,7 +108,7 @@ Search for and read these files in order of priority (if they exist):
 
 ### 0.2 Language-Specific Config Detection
 
-Detect programming languages from the file extensions in the staged diff (e.g., `.go` → Go, `.rs` → Rust, `.py` → Python). Then, based on your knowledge of those languages:
+Detect programming languages from the file extensions in the diff (e.g., `.go` → Go, `.rs` → Rust, `.py` → Python). Then, based on your knowledge of those languages:
 
 1. **Identify the linter, formatter, and static analysis tools** commonly used for the detected language(s)
 2. **Search the project root for their config files** (e.g., `.golangci.yml` for Go, `.rubocop.yml` for Ruby, `ruff.toml` for Python — use your knowledge, do not rely on a hardcoded list)
@@ -124,7 +142,7 @@ After reading available files, create a mental model:
 
 ### 1.0 Check for BitoReview CLI
 
-Check the **BitoReview CLI Available** output captured above (in the "Staged Changes to Review" section). If a file path was returned (e.g., `/usr/local/bin/bitoreview`), bitoreview IS installed — you MUST use it for Phase 1.1. If the output was empty or showed an error, bitoreview is NOT installed — proceed to Phase 1.2.
+Run `which bitoreview` to check if the CLI is installed. If a file path is returned (e.g., `/usr/local/bin/bitoreview`), bitoreview IS installed — you MUST use it for Phase 1.1. If the command fails or returns nothing, bitoreview is NOT installed — skip to Phase 1.2. **Phase 1.2 (manual review) ALWAYS runs regardless of whether bitoreview was used.**
 
 **Do NOT skip bitoreview when it is available.** It provides more comprehensive analysis than manual review.
 
@@ -137,7 +155,7 @@ Use `bitoreview` for comprehensive code review:
 TEMP_FILE="/tmp/bitoreview_$(date +%s).json"
 
 # Run bitoreview with JSON output
-bitoreview review --prompt-only --type working 2>&1 | tee "$TEMP_FILE"
+bitoreview review --prompt-only 2>&1 | tee "$TEMP_FILE"
 ```
 
 **After bitoreview completes — validate each issue:**
@@ -158,9 +176,9 @@ Validation matters: Static analysis tools have 30-60% false positive rates. Your
 - Critical only (faster): `--mode essential`
 - Compare to main: `--base main`
 
-### 1.2 If BitoReview is NOT AVAILABLE (Fallback)
+### 1.2 Manual Review (ALWAYS runs)
 
-Perform manual review of staged changes for:
+Perform manual review of all local changes for:
 
 #### Correctness Issues (BLOCKING)
 - Logic errors, off-by-one bugs, null pointer risks
@@ -199,7 +217,7 @@ Based on Phase 0 context, also check:
 - [ ] **Test requirements** are met (if defined in docs)
 
 **Create a checklist and mark each item:**
-- [ ] Reviewed all staged files for correctness issues
+- [ ] Reviewed all changed files for correctness issues
 - [ ] Checked for security vulnerabilities
 - [ ] Identified any breaking changes
 - [ ] Validated against project conventions (from Phase 0)
@@ -233,7 +251,7 @@ Use BitoAIArchitect to analyze how these changes affect the broader system:
 
 ### 2.2 Analyze Changed Interfaces
 
-For each file with staged changes:
+For each changed file:
 
 - [ ] **If it's an API endpoint/route**: Who calls this endpoint?
   - Use `searchCode` to find usages of the endpoint path across all repos
@@ -364,7 +382,7 @@ Present a brief summary at the end:
 
 ```
 Blocking: [N] | Cross-Repo Impact: [N] | Suggestions: [N]
-Review Method: [BitoReview CLI | Manual] | Config Files: [N]
+Review Method: [BitoReview CLI + Manual | Manual only] | Config Files: [N]
 ```
 
 ---
@@ -418,7 +436,7 @@ Present the impact analysis and ask:
 
 ### Generate Commit Message
 
-Based on the staged changes and project conventions (from Phase 0), generate a commit message:
+Based on the changes and project conventions (from Phase 0), generate a commit message:
 
 **Check CONTRIBUTING.md or project docs for commit message format.** If not specified, use conventional commits:
 
@@ -453,34 +471,16 @@ Ask user: "Ready to commit with the above message? (yes/edit/cancel)"
 | "Let me commit now and fix in a follow-up" | Breaking changes deployed are costly to revert |
 | "Skip reading project docs, I know the conventions" | Project rules may have changed or have nuances you missed |
 | "Show all BitoReview findings without verifying" | Only present verified issues - validate against actual code first |
+| "bitoreview is available but I'll do manual review instead" | When bitoreview CLI is installed, you MUST run it — it provides more comprehensive analysis |
+| "bitoreview ran, so skip manual review" | Manual review ALWAYS runs — bitoreview supplements it, does not replace it |
+| "No arguments provided, skip the review" | Default to reviewing ALL local changes (staged and unstaged) when invoked without arguments |
+| "Only review staged changes" | Review both staged and unstaged changes unless user explicitly requests staged-only |
 
 ---
 
-## Quick Reference: Project Context Files
+## Quick Reference
 
-| File | What It Contains |
-|------|------------------|
-| `CLAUDE.md` | Project-specific AI instructions, coding standards |
-| `AGENTS.md` | Agent workflows, review criteria |
-| `.cursorrules` | Cursor IDE coding rules |
-| `CONTRIBUTING.md` | PR requirements, commit format |
-| `CODEOWNERS` | Who owns which code paths |
-| `.editorconfig` | Formatting rules |
-| `.pre-commit-config.yaml` | Pre-commit hooks and checks |
-| Language-specific configs | Detected from file extensions in the diff (see Phase 0.2) |
-
----
-
-## Quick Reference: BitoAIArchitect Queries
-
-| What You Need | Tool to Use |
-|---|---|
-| What depends on this repo? | `getRepositoryInfo(repo, includeIncomingDependencies=true)` |
-| What does this repo depend on? | `getRepositoryInfo(repo, includeOutgoingDependencies=true)` |
-| Find usages of a function | `searchSymbols(pattern)` + `searchCode(pattern)` |
-| Find API endpoint consumers | `searchCode(endpoint_path)` |
-| Understand repo clusters | `listClusters()` + `getClusterInfo(clusterId)` |
-| Compare patterns across repos | `queryFieldAcrossRepositories(repos, fieldPath)` |
+See [references/cross-repo-analysis-reference.md](references/cross-repo-analysis-reference.md) for detailed BitoAIArchitect tool usage examples, impact classification matrix, and coordination requirements.
 
 ---
 
